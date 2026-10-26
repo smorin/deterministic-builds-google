@@ -28,7 +28,7 @@ def main() -> None:
 
     lock = json.loads(Path(args.lock).read_text())
     pkgs = [p for p in lock["packages"] if p["system"] == args.system]
-    ns = f"https://github.com/justincastilla/deterministic-builds-ATO/sbom/{args.name}/{args.system}"
+    ns = f"https://github.com/smorin/deterministic-builds-google/sbom/{args.name}/{args.system}"
 
     spdx_pkgs, rels = [], []
     for p in sorted(pkgs, key=lambda p: p["install_id"]):

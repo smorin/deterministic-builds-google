@@ -1,10 +1,8 @@
 # One Environment, N Machines: Deterministic Builds for Humans and Agents
 
-Demo repository and slide deck for a 25 minute talk at
-[All Things Open 2026](https://www.allthingsopen.org/) (Raleigh, October 19 to 20).
-An earlier 5 minute version was given at WeAreDevelopers World Congress NA 2026.
+Demo repository and slide deck for a 25 minute talk at Google (October 26, 2026).
 
-**Speaker:** Justin Castilla ([@justincastilla](https://github.com/justincastilla)), Flox
+**Speaker:** Steve Morin ([@smorin](https://github.com/smorin)), Flox
 
 ## What is in here
 
@@ -23,7 +21,7 @@ slides/script.md          the spoken script, one section per slide, with cue mar
 Install Flox from [flox.dev/download](https://flox.dev/download) (or `brew install flox`), then:
 
 ```sh
-git clone https://github.com/justincastilla/deterministic-builds-ATO && cd deterministic-builds-ATO
+git clone https://github.com/smorin/deterministic-builds-google && cd deterministic-builds-google
 
 flox activate -s                       # enter the env and start redis + app
 python3 --version                      # Python 3.14.7, on every machine
@@ -34,7 +32,7 @@ flox build                             # hermetic (sandbox = "pure") build
 ./result-app/bin/app --version
 
 flox containerize --runtime docker     # OCI image, no Dockerfile
-docker run --rm -v "$PWD:/w" -w /w deterministic-builds-ato:latest python3 app.py --report
+docker run --rm -v "$PWD:/w" -w /w deterministic-builds-google:latest python3 app.py --report
 python3 scripts/sbom.py | jq '.packages[] | {name, versionInfo, licenseConcluded}'
 ```
 
@@ -64,7 +62,7 @@ jq -r '[.packages[].locked_url] | unique[]' .flox/env/manifest.lock
 ## The deck
 
 Open `slides/index.html` in a browser (or the
-[GitHub Pages copy](https://justincastilla.github.io/deterministic-builds-ATO/slides/)).
+[GitHub Pages copy](https://smorin.github.io/deterministic-builds-google/slides/)).
 Terminal slides type each command when you press `→`, then reveal the output.
 
 | Key | Action |
@@ -85,7 +83,7 @@ speaker notes:
 - The `ci-runner` and `agent-sandbox` panes on the three machine slide. Their
   versions and store paths are the real ones from `manifest.lock`; the machines
   were not on my desk.
-- `flox activate -r justin-flox/deterministic-builds-ato`. Run `flox push` from
+- `flox activate -r smorin/deterministic-builds-google`. Run `flox push` from
   this repo before the talk and that step works live.
 - The `claude -p ...` transcript. Every command in it is real and `nodejs@22.21.1`
   is what the catalog resolves today.
