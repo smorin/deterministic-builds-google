@@ -228,7 +228,7 @@ const REPORT_JSON = `{
   "version": "0.1.0",
   "python": "3.14.7",
   "system": "arm64-darwin",
-  "flox_env": "~/deterministic-builds-ATO/.flox/run/aarch64-darwin.deterministic-builds-ato-dev",
+  "flox_env": "~/deterministic-builds-google/.flox/run/aarch64-darwin.deterministic-builds-google-dev",
   "redis": <span class="ok">"PONG"</span>
 }`;
 
@@ -314,7 +314,7 @@ RUN apt-get update &amp;&amp; apt-get install -y redis jq
     notes: `This is the real path of the Python in this repo. The 32 character hash covers the source tarball, every dependency (by their own hashes), the build script, the configure flags, and the target system. The name after the dash is for humans; Nix never looks anything up by name. Three consequences, read them off the slide. <b>Leave by 8:30.</b>` },
 
   // 8
-  { type: 'term', t: 8.5, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-ATO', small: true,
+  { type: 'term', t: 8.5, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-google', small: true,
     steps: [
       { cmd: `flox activate -- sh -c 'realpath "$(which python3)"'`,
         out: `/nix/store/<span class="hash">0kcws5blwbdyxqxjd1w8hjipz61xny3k</span>-python3-3.14.7/bin/python3.14` },
@@ -358,7 +358,7 @@ RUN apt-get update &amp;&amp; apt-get install -y redis jq
     notes: `Top to bottom. You write TOML. The Flox CLI resolves each name and version constraint to a specific nixpkgs commit, writes the lock with a store path per system, and then hands everything to Nix: building the environment, running the sandboxed build, emitting the container. Nix does what it always does. nixpkgs is where the recipes live. The right column is the honest division of labor: what Flox adds, and what it deliberately leaves alone. <b>Leave by 11:30.</b>` },
 
   // 11
-  { type: 'term', t: 11.5, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-ATO',
+  { type: 'term', t: 11.5, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-google',
     steps: [
       { cmd: `jq -r '.packages[] | select(.install_id=="python3" and .system=="aarch64-darwin") | .locked_url, .attr_path, .outputs.out' .flox/env/manifest.lock`,
         out: `https://github.com/flox/nixpkgs?rev=<span class="em">7fd4004d0511991fff3a0524856a9be09e28c5f0</span>
@@ -387,10 +387,10 @@ python3
     notes: `Switch to the laptop terminal framing. Every command on the next three slides was run for real in this repo; the outputs are the captured ones.` },
 
   // 14
-  { type: 'term', t: 12.75, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-ATO',
+  { type: 'term', t: 12.75, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-google',
     steps: [
       { cmd: 'flox init',
-        out: `<span class="hash">⚡︎</span> Created environment 'deterministic-builds-ato' (aarch64-darwin)
+        out: `<span class="hash">⚡︎</span> Created environment 'deterministic-builds-google' (aarch64-darwin)
 
 Next:
   $ flox search &lt;package&gt;    &lt;- Search for a package
@@ -398,7 +398,7 @@ Next:
   $ flox activate            &lt;- Enter the environment
   $ flox edit                &lt;- Add environment variables and shell hooks` },
       { cmd: 'flox install python3 redis jq claude-code',
-        out: `<span class="ok">✔</span> 'python3', 'redis', 'jq', 'claude-code' installed to environment 'deterministic-builds-ato'
+        out: `<span class="ok">✔</span> 'python3', 'redis', 'jq', 'claude-code' installed to environment 'deterministic-builds-google'
 <span class="info">ℹ</span> 'jq' has additional outputs, use 'flox list -a' to see more
 <span class="warn">!</span> The package 'claude-code' has an unfree license, please verify the licensing terms of use` },
       { cmd: 'flox list', out: LIST_OUT },
@@ -406,7 +406,7 @@ Next:
     notes: `Three commands. Call out that <code>claude-code</code> is just another package: the agent's harness is pinned the same way the runtime is. Resolution goes through Flox's catalog, which indexes every nixpkgs revision, so these numbers are exact, not "latest". Each one is a commit and a store path, as the Nix section showed.` },
 
   // 15
-  { type: 'term', t: 14, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-ATO',
+  { type: 'term', t: 14, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-google',
     steps: [
       { cmd: 'cat .flox/env/manifest.toml', out: MANIFEST },
     ],
@@ -414,10 +414,10 @@ Next:
     notes: `This is the whole thing. Walk top to bottom: runtime, database, agent harness, static vars, two services, and a build that runs in a pure sandbox and only ships python and redis in its runtime closure. The <code>systems</code> line is what makes the next demo work.` },
 
   // 16
-  { type: 'term', t: 15, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-ATO',
+  { type: 'term', t: 15, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-google',
     steps: [
       { cmd: 'flox activate -s',
-        out: `<span class="ok">✔</span> You are now using the environment 'deterministic-builds-ato'
+        out: `<span class="ok">✔</span> You are now using the environment 'deterministic-builds-google'
 To stop using this environment, run 'flox deactivate'
 <span class="ok">✔</span> Service 'app' started.
 <span class="ok">✔</span> Service 'redis' started.`, ps: 'flox' },
@@ -445,10 +445,10 @@ redis      <span class="ok">Running</span>    97510` },
       { host: 'agent-sandbox', sys: 'aarch64-linux' },
     ],
     steps: [
-      { cmd: 'git clone justincastilla/deterministic-builds-ATO && cd $_',
-        out: [`Cloning into 'deterministic-builds-ATO'...
-<span class="dim">done.</span>`, `Cloning into 'deterministic-builds-ATO'...
-<span class="dim">done.</span>`, `Cloning into 'deterministic-builds-ATO'...
+      { cmd: 'git clone smorin/deterministic-builds-google && cd $_',
+        out: [`Cloning into 'deterministic-builds-google'...
+<span class="dim">done.</span>`, `Cloning into 'deterministic-builds-google'...
+<span class="dim">done.</span>`, `Cloning into 'deterministic-builds-google'...
 <span class="dim">done.</span>`] },
       { cmd: 'flox activate -- python3 --version',
         out: ['Python <span class="ok">3.14.7</span>', 'Python <span class="ok">3.14.7</span>', 'Python <span class="ok">3.14.7</span>'] },
@@ -461,13 +461,13 @@ redis      <span class="ok">Running</span>    97510` },
   // 19
   { type: 'term', t: 18, host: 'agent-sandbox', sys: 'aarch64-linux', cwd: '/workspace',
     steps: [
-      { cmd: 'flox activate -r justin-flox/deterministic-builds-ato -- python3 app.py --report',
+      { cmd: 'flox activate -r justin-flox/deterministic-builds-google -- python3 app.py --report',
         out: `{
   "service": "ato-demo",
   "version": "0.1.0",
   "python": "3.14.7",
   "system": "aarch64-linux",
-  "flox_env": "/root/.cache/flox/run/aarch64-linux.deterministic-builds-ato-dev",
+  "flox_env": "/root/.cache/flox/run/aarch64-linux.deterministic-builds-google-dev",
   "redis": "down"
 }` },
     ],
@@ -478,7 +478,7 @@ redis      <span class="ok">Running</span>    97510` },
     notes: `Now the second problem: run it the same wherever it lands next.` },
 
   // 21
-  { type: 'term', t: 19.75, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-ATO',
+  { type: 'term', t: 19.75, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-google',
     steps: [
       { cmd: 'flox build',
         out: `Building app-0.1.0 in Nix sandbox (<span class="em">pure</span>) mode
@@ -498,11 +498,11 @@ Completed build of app-0.1.0 in Nix sandbox mode
     notes: `Pure sandbox: no network, only the git-tracked sources and the manifest's packages. Note the shebang rewrite: the artifact is wired to the exact Python from the lock, so it runs identically outside the environment. The store path is a hash of every input.` },
 
   // 22
-  { type: 'term', t: 21, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-ATO',
+  { type: 'term', t: 21, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-google',
     steps: [
       { cmd: 'flox containerize --runtime docker',
-        out: `<span class="hash">⚡︎</span> 'deterministic-builds-ato:latest' written to Docker runtime` },
-      { cmd: 'docker run --rm -v "$PWD:/w" -w /w deterministic-builds-ato:latest python3 app.py --report',
+        out: `<span class="hash">⚡︎</span> 'deterministic-builds-google:latest' written to Docker runtime` },
+      { cmd: 'docker run --rm -v "$PWD:/w" -w /w deterministic-builds-google:latest python3 app.py --report',
         out: `{
   "service": "ato-demo",
   "version": "0.1.0",
@@ -531,13 +531,13 @@ redis@8.10.2  AGPL-3.0-only` },
     notes: `The agent is not a special case. It edits the same file, runs the same verbs, and gets the same closure. That is the whole trick: make the environment a declared input to the work, for whoever is doing the work.` },
 
   // 24
-  { type: 'term', t: 23.25, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-ATO',
+  { type: 'term', t: 23.25, host: 'laptop', sys: 'aarch64-darwin', cwd: '~/deterministic-builds-google',
     steps: [
       { cmd: 'claude -p "add node 22 to this environment and prove it activates"',
         out: `<span class="dim">› flox search nodejs
 › flox show nodejs</span>
 <span class="dim">› flox install nodejs@22</span>
-<span class="ok">✔</span> 'nodejs' installed to environment 'deterministic-builds-ato'
+<span class="ok">✔</span> 'nodejs' installed to environment 'deterministic-builds-google'
 <span class="dim">› flox activate -- node --version</span>
 v22.21.1
 
@@ -559,7 +559,7 @@ Added <span class="em">nodejs.pkg-path = "nodejs"</span> and <span class="em">no
       ['Nix and nixpkgs', 'nixos.org · github.com/NixOS/nixpkgs'],
       ['Flox CLI (GPL-2.0)', 'github.com/flox/flox · flox.dev'],
       ['Agent skills (Apache-2.0)', 'github.com/flox/flox-skills'],
-      ['This demo + deck', 'github.com/justincastilla/deterministic-builds-ATO'],
+      ['This demo + deck', 'github.com/smorin/deterministic-builds-google'],
       ['Me', '@smorin'],
     ],
     notes: `Leave this up for questions.` },
