@@ -4,7 +4,7 @@ Demo repository and slide deck for a 25 minute talk at
 [All Things Open 2026](https://www.allthingsopen.org/) (Raleigh, October 19 to 20).
 An earlier 5 minute version was given at WeAreDevelopers World Congress NA 2026.
 
-**Speaker:** Justin Castilla ([@justincastilla](https://github.com/justincastilla)), Flox
+**Speaker:** Steve Morin ([@smorin](https://github.com/smorin)), Flox
 
 ## What is in here
 
@@ -85,7 +85,7 @@ speaker notes:
 - The `ci-runner` and `agent-sandbox` panes on the three machine slide. Their
   versions and store paths are the real ones from `manifest.lock`; the machines
   were not on my desk.
-- `flox activate -r justin-flox/deterministic-builds-google`. Run `flox push` from
+- `flox activate -r smorin/deterministic-builds-google`. Run `flox push` from
   this repo before the talk and that step works live.
 - The `claude -p ...` transcript. Every command in it is real and `nodejs@22.21.1`
   is what the catalog resolves today.
