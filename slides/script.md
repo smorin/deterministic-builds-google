@@ -88,8 +88,8 @@ its own idea of "latest".
 
 ## 5 · Build it the same. Run it the same. — 4:30 (≈200 words)
 
-Two problems fall out of that, and I want to separate them because they have
-the same fix but different shapes.
+That mess is really two problems, and I want to separate them because they
+have the same fix but different shapes.
 
 Problem one: the same build, on every machine. Laptop, CI runner, local
 sandbox, agent sandbox. One definition of the toolchain, reproduced exactly,
