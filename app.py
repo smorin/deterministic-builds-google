@@ -23,7 +23,7 @@ def redis_ping() -> str:
 
 def report() -> dict:
     return {
-        "service": "ato-demo",
+        "service": "google-demo",
         "version": VERSION,
         "python": platform.python_version(),
         "system": f"{platform.machine()}-{sys.platform}",
@@ -47,13 +47,13 @@ class Handler(BaseHTTPRequestHandler):
 
 def main() -> None:
     if "--version" in sys.argv:
-        print(f"ato-demo {VERSION} (python {platform.python_version()})")
+        print(f"google-demo {VERSION} (python {platform.python_version()})")
         return
     if "--report" in sys.argv:
         print(json.dumps(report(), indent=2))
         return
     port = int(os.environ.get("APP_PORT", "8080"))
-    print(f"ato-demo {VERSION} listening on http://localhost:{port}", flush=True)
+    print(f"google-demo {VERSION} listening on http://localhost:{port}", flush=True)
     HTTPServer(("", port), Handler).serve_forever()
 
 

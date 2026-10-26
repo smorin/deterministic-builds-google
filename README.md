@@ -77,7 +77,11 @@ Terminal slides type each command when you press `→`, then reveal the output.
 Every terminal output in the deck was captured from a real run of this
 repository on 2026-10-16 with flox 1.18.0; the plain `nix` commands in the
 "Under the hood" section were captured on 2026-10-17 with nix 2.31.5 against
-the same `manifest.lock`. Three things are emulated and marked as such in the
+the same `manifest.lock`. For this Google version, names in that output were
+changed after capture (`deterministic-builds-ATO` to `deterministic-builds-google`,
+`ato-demo` to `google-demo`, and the GitHub and FloxHub owner to `smorin`), and
+the clone command on the three machine slide was corrected; versions, hashes, and
+store paths are unchanged. Three things are emulated and marked as such in the
 speaker notes:
 
 - The `ci-runner` and `agent-sandbox` panes on the three machine slide. Their
