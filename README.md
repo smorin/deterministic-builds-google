@@ -1,8 +1,6 @@
 # One Environment, N Machines: Deterministic Builds for Humans and Agents
 
-Demo repository and slide deck for a 25 minute talk at
-[All Things Open 2026](https://www.allthingsopen.org/) (Raleigh, October 19 to 20).
-An earlier 5 minute version was given at WeAreDevelopers World Congress NA 2026.
+Demo repository and slide deck for a 25 minute talk at Google (October 26, 2026).
 
 **Speaker:** Steve Morin ([@smorin](https://github.com/smorin)), Flox
 
