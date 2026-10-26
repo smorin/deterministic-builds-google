@@ -13,7 +13,7 @@ talking plus the typing pauses and the show of hands.
 
 ## 1 · Title — 0:00 (≈140 words)
 
-Hi, I'm Justin. I'm a developer advocate at Flox, and I want to say up front
+Hi, I'm Steve. I'm VP of Engineering at Flox, and I want to say up front
 what that means for the next 25 minutes: I'm going to show you two layers of
 open source software, Nix and Flox, and I'm going to tell you exactly which
 parts are open source and which parts are hosted services, because you should
